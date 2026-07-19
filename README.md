@@ -1,2 +1,11 @@
+*This project has been created as part of the 42 curriculum by pecoelho.*
 # Codexion
-The Dining Philosophers enigma
+## Description
+The Dining Philosophers enigma.
+
+---
+## Instructions
+Something will be written here.
+
+---
+## Resources
