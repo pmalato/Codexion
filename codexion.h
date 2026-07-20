@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/20 12:44:26 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/20 12:56:12 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define CODEXION_H
 # include <unistd.h>
 # include <stdlib.h>
+
+typedef struct	args_list
+{
+	int blabla;
+}
 
 int	is_nmb_of_args_valid(int ac);
 int	ft_strcmp(char *s1, char *s2);
