@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/20 12:56:12 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/20 17:30:38 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 
 typedef struct	args_list
 {
-	int blabla;
-}
+	void				*content;
+	struct args_list	*next;
+}				t_parse_list;
 
 int	is_nmb_of_args_valid(int ac);
 int	ft_strcmp(char *s1, char *s2);
