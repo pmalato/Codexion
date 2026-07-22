@@ -1,37 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/20 11:04:22 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/20 17:33:07 by pmalato          ###   ########.fr       */
+/*   Created: 2026/07/22 23:01:17 by pmalato           #+#    #+#             */
+/*   Updated: 2026/07/22 23:41:55 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../codexion.h"
 
-t_parse_list	**get_value_list(int ac, char **av)
+void	pack_values(t_arguments *parsed, char **av)
 {
-	t_parse_list	**list;
-	t_parse_list	*node;
-	int				num_value;
-	int				i;
+	parsed->number_of_coders = codex_atoi(av[1]);
+	parsed->time_to_burnout = codex_atoi(av[2]);
+	parsed->time_to_compile = codex_atoi(av[3]);
+	parsed->time_to_debug = codex_atoi(av[4]);
+	parsed->time_to_refactor = codex_atoi(av[5]);
+	parsed->number_of_compiles_required = codex_atoi(av[6]);
+	parsed->dongle_cooldown = codex_atoi(av[7]);
+	parsed->scheduler = av[8];
+}
 
-	if (!av || !is_nmb_of_args_valid(ac))
+t_arguments	*args_parser(int ac, char **av)
+{
+	t_arguments	*parsed;
+	int			i;
+
+	if (!is_nmb_of_args_valid(ac))
 		return (NULL);
-	i = 0;
-	while (av[i] <= 7)
+	i = 1;
+	while (i <= 7)
 	{
-		num_value = is_numeric_arg_valid(av[i]);
-		if (!num_value)
+		if (!is_numeric_arg_valid(av[i]))
 			return (NULL);
-		else
-		{
-			node->content = num_value;
-			node->next = node;
-		}
 		i++;
 	}
+	if (!is_fifo_or_edf(av[8]))
+		return (NULL);
+	parsed = malloc(sizeof(t_arguments));
+	if (!parsed)
+		return (NULL);
+	pack_values(parsed, av);
+	return (parsed);
 }

@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 12:24:35 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/20 17:44:51 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/22 11:28:18 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,24 @@ int	codex_atoi(char *str)
 		res = (res * 10) + (str[i] - '0');
 		i++;
 	}
+	if (res > 2147483647)
+		return (0);
 	return (res);
 }
 
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (s1[i])
+	j = 0;
+	while (s1[i] || s2[j])
 	{
-		if (s1[i] != s2[i])
+		if (s1[i] != s2[j])
 			return (0);
 		i++;
+		j++;
 	}
 	return (1);
 }
@@ -76,15 +81,4 @@ int	is_fifo_or_edf(char *str)
 	if (!(test1 || test2))
 		return (0);
 	return (1);
-}
-
-#include <stdio.h>
-int	main(void)
-{
-	printf("%d\n", is_fifo_or_edf("fifo"));
-	printf("%d\n", is_fifo_or_edf("FIFO"));
-	printf("%d\n", is_fifo_or_edf("fiffo"));
-	printf("%d\n", is_fifo_or_edf("edf"));
-	printf("%d\n", is_fifo_or_edf("EDF"));
-	return (0);
 }

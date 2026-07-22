@@ -5,7 +5,6 @@ CFLAGS = -Wall -Wextra -Werror -c
 SRC = codexion.c \
 	src/parsing/parser.c \
 	src/parsing/parser_utils1.c \
-	src/parsing/parser_utils2.c
 	
 OBJ = $(SRC:.c=.o)
 
@@ -19,6 +18,7 @@ $(NAME): $(OBJ)
 
 clean:
 	rm -f $(OBJ)
+	clear
 
 fclean: clean
 	rm -f $(NAME)
