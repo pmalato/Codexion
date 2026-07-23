@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils3.c                                    :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 23:01:17 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/22 23:41:55 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/23 21:27:11 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_arguments	*args_parser(int ac, char **av)
 	i = 1;
 	while (i <= 7)
 	{
+		if (i == 1 && is_numeric_arg_valid(av[1]) && !codex_atoi(av[1]))
+			return (NULL);
 		if (!is_numeric_arg_valid(av[i]))
 			return (NULL);
 		i++;

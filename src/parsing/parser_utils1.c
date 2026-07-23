@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 12:24:35 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/22 11:28:18 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/23 21:00:55 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,15 @@ int	codex_atoi(char *str)
 	i = 0;
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
-	if (str[i] == '+')
-		i++;
-	else if (str[i] == '-')
-		return (0);
+	if (str[i] == '+' || str[i] == '-')
+		return (-1);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = (res * 10) + (str[i] - '0');
 		i++;
 	}
 	if (res > 2147483647)
-		return (0);
+		return (-1);
 	return (res);
 }
 
@@ -65,10 +63,10 @@ int	is_numeric_arg_valid(char *str)
 	int	test;
 
 	test = codex_atoi(str);
-	if (!test)
+	if (test == -1)
 		return (0);
 	else
-		return (test);
+		return (1);
 }
 
 int	is_fifo_or_edf(char *str)
