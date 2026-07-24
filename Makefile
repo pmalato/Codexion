@@ -1,6 +1,6 @@
 NAME = codexion
 
-CFLAGS = -Wall -Wextra -Werror -c
+CFLAGS = -pthread -Wall -Wextra -Werror
 
 SRC = codexion.c \
 	src/parsing/parser.c \
@@ -11,10 +11,10 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	cc $(CFLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.c
-	cc $(CFLAGS) $< -o $@
+	cc $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
@@ -22,6 +22,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	clear
 
 re: fclean all
 
