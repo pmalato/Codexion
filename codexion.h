@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/25 11:39:05 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/25 17:39:05 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,18 @@ typedef struct s_thread
 
 void		pack_values(t_arguments *parsed, char **av);
 void		*coder_routine(void *arg);
+void		thread_cleanup(t_coder *c_list, size_t size);
 int			is_nmb_of_args_valid(int ac);
 int			ft_strcmp(char *s1, char *s2);
 int			codex_atoi(char *str);
 int			is_numeric_arg_valid(char *str);
 int			is_fifo_or_edf(char *str);
 t_arguments	*args_parser(int ac, char **av);
-t_dongle	new_dongle();
+t_dongle	new_dongle(void);
 t_dongle	*dongle_list(t_arguments *parsed);
-t_coder		new_coder();
+t_coder		new_coder(void);
 t_coder		*coder_list(t_arguments *parsed);
-t_thread	new_thread_struct(\
+t_thread	*new_thread_struct(\
 	t_coder *coder, t_dongle *dongle, t_arguments *parsed);
 
 #endif
