@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/23 18:58:33 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/25 11:39:05 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,42 @@ typedef struct s_arguments
 	char	*scheduler;
 }				t_arguments;
 
-typedef struct s_coders
+typedef struct s_coder
 {
-	int		dongles;
-	bool	busy;
-}				t_coders;
+	int					id;
+	int					compiled_times;
+	struct timeval		deadline;
+	int					last_compile;
+	pthread_t			thread;
+}				t_coder;
+
+typedef struct s_dongle
+{
+	bool			state;
+	int				cooldown;
+	pthread_mutex_t	mutex;
+}				t_dongle;
+
+typedef struct s_thread
+{
+	t_coder		*coder;
+	t_dongle	*d_list;
+	t_arguments	*parsed;
+}				t_thread;
 
 void		pack_values(t_arguments *parsed, char **av);
+void		*coder_routine(void *arg);
 int			is_nmb_of_args_valid(int ac);
 int			ft_strcmp(char *s1, char *s2);
 int			codex_atoi(char *str);
 int			is_numeric_arg_valid(char *str);
 int			is_fifo_or_edf(char *str);
 t_arguments	*args_parser(int ac, char **av);
+t_dongle	new_dongle();
+t_dongle	*dongle_list(t_arguments *parsed);
+t_coder		new_coder();
+t_coder		*coder_list(t_arguments *parsed);
+t_thread	new_thread_struct(\
+	t_coder *coder, t_dongle *dongle, t_arguments *parsed);
 
 #endif

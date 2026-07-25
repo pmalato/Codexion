@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   trhead_utils.c                                     :+:      :+:    :+:   */
+/*   thread_routine.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/23 17:02:05 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/23 19:08:22 by pmalato          ###   ########.fr       */
+/*   Created: 2026/07/25 10:16:13 by pmalato           #+#    #+#             */
+/*   Updated: 2026/07/25 11:38:47 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../codexion.h"
 
-void	*coders(t_arguments *parse)
+void	*coder_routine(void *arg)
 {
-	return (NULL);
+	t_thread	*thread;
+
+	thread = (t_coder *)arg;
 }

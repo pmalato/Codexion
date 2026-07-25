@@ -5,6 +5,8 @@ CFLAGS = -pthread -Wall -Wextra -Werror
 SRC = codexion.c \
 	src/parsing/parser.c \
 	src/parsing/parser_utils1.c \
+	src/threading/structs_config.c \
+	src/thredaing/thread_routine.c
 	
 OBJ = $(SRC:.c=.o)
 
