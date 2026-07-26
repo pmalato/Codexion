@@ -4,9 +4,9 @@ CFLAGS = -pthread -Wall -Wextra -Werror
 
 SRC = codexion.c \
 	src/parsing/parser.c \
-	src/parsing/parser_utils1.c \
+	src/parsing/parser_utils.c \
 	src/threading/structs_config.c \
-	src/thredaing/thread_config.c
+	src/threading/thread_config.c
 	
 OBJ = $(SRC:.c=.o)
 
@@ -20,11 +20,9 @@ $(NAME): $(OBJ)
 
 clean:
 	rm -f $(OBJ)
-	clear
 
 fclean: clean
 	rm -f $(NAME)
-	clear
 
 re: fclean all
 
