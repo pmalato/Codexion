@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 10:16:13 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/26 20:31:07 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/30 20:19:34 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,22 @@ void	thread_cleanup(t_coder *c_list, size_t size)
 	}
 }
 
+int	thread_setup(t_coder *c_list, size_t id, \
+t_dongle *d_list, t_arguments *parsed)
+{
+	t_thread	*thread;
+
+	thread = new_thread_struct(c_list, d_list, parsed);
+	if (!thread)
+		return (0);
+	if (pthread_create(&c_list[id].thread, NULL, coder_routine, (void *)thread))
+	{
+		free(thread);
+		return (0);
+	}
+	return (1);
+}
+
 long	current_time(void)
 {
 	struct timeval	c_time;
@@ -34,6 +50,8 @@ long	current_time(void)
 
 long	compile(long c_time, t_thread *thread)
 {
+	thread->coder->deadline = current_time() \
++ thread->parsed->time_to_burnout;
 	printf("%ld %d is compiling\n", c_time, thread->coder->id);
 	usleep(thread->parsed->time_to_compile * 1000);
 	return (current_time() - thread->parsed->clock_start);

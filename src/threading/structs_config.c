@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/23 17:02:05 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/25 17:51:54 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/30 19:59:39 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_dongle	*dongle_list(t_arguments *parsed)
 	{
 		d_list[i] = new_dongle();
 		pthread_mutex_init(&d_list[i].mutex, NULL);
+		pthread_cond_init(&d_list[i].cond, NULL);
 		i++;
 	}
 	return (d_list);
@@ -47,6 +48,8 @@ t_coder	new_coder(void)
 
 	coder.compiled_times = 0;
 	coder.last_compile = 0;
+	coder.alive = true;
+	coder.done = false;
 	return (coder);
 }
 
@@ -67,8 +70,6 @@ t_thread	*new_thread_struct(\
 t_coder	*coder_list(t_arguments *parsed, t_dongle *d_list)
 {
 	t_coder		*c_list;
-	t_thread	*thread;
-	int			thread_fail;
 	size_t		i;
 
 	i = 0;
@@ -79,16 +80,7 @@ t_coder	*coder_list(t_arguments *parsed, t_dongle *d_list)
 	{
 		c_list[i] = new_coder();
 		c_list[i].id = i;
-		thread = new_thread_struct(&c_list[i], d_list, parsed);
-		if (!thread)
-			return (NULL);
-		thread_fail = pthread_create(&c_list[i].thread, NULL, \
-coder_routine, (void *)thread);
-		if (thread_fail)
-		{
-			thread_cleanup(c_list, i);
-			return (NULL);
-		}
+		c_list[i].parsed = parsed;
 		i++;
 	}
 	return (c_list);

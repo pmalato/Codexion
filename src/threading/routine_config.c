@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/26 11:58:36 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/26 20:51:54 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/29 16:41:50 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	dongle_unlock(pthread_cond_t *c1, pthread_cond_t *c2,\
 	pthread_mutex_unlock(m2);
 }
 
-long	dongle_handler(long c_time, t_thread *thread)
+long	dongle_handler(t_thread *thread)
 {
 	long	time_dongle;
 	int		c_id;
@@ -71,14 +71,15 @@ thread->parsed->dongle_cooldown);
 void	*coder_routine(void *arg)
 {
 	t_thread	*thread;
-	int			cycles;
+	long		time1;
 
 	thread = (t_thread *)arg;
-	cycles = thread->parsed->number_of_compiles_required;
-	while (cycles)
+	while (thread->coder->compiled_times \
+< thread->parsed->number_of_compiles_required)
 	{
-		usleep(thread->parsed->time_to_debug * 1000);
-		usleep(thread->parsed->time_to_refactor * 1000);
+		time1 = dongle_handler(thread);
+		debug_and_refactor(time1, thread);
+		thread->coder->compiled_times++;
 	}
 	return (NULL);
 }

@@ -7,7 +7,8 @@ SRC = codexion.c \
 	src/parsing/parser_utils.c \
 	src/threading/structs_config.c \
 	src/threading/thread_config.c \
-	src/threading/routine_config.c
+	src/threading/routine_config.c \
+	src/threading/monitor_helper.c
 	
 OBJ = $(SRC:.c=.o)
 
