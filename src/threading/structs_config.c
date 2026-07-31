@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/23 17:02:05 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/30 19:59:39 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/31 12:34:00 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ t_thread	*new_thread_struct(\
 	return (thread);
 }
 
-t_coder	*coder_list(t_arguments *parsed, t_dongle *d_list)
+t_coder	*coder_list(t_arguments *parsed)
 {
 	t_coder		*c_list;
-	size_t		i;
+	int			i;
 
 	i = 0;
-	c_list = malloc(sizeof(t_coder) * (size_t)parsed->number_of_coders);
+	c_list = malloc(sizeof(t_coder) * parsed->number_of_coders);
 	if (!c_list)
 		return (NULL);
-	while (i < (size_t)parsed->number_of_coders)
+	while (i < parsed->number_of_coders)
 	{
 		c_list[i] = new_coder();
 		c_list[i].id = i;

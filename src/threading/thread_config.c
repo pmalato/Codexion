@@ -6,22 +6,24 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 10:16:13 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/30 20:19:34 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/31 12:19:47 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../codexion.h"
 
-void	thread_cleanup(t_coder *c_list, size_t size)
+t_monitor	*new_monitor_struct(t_arguments *parsed, \
+	t_dongle *d_list, t_coder *c_list)
 {
-	size_t	i;
+	t_monitor	*monitor;
 
-	i = 0;
-	while (i < size)
-	{
-		pthread_join(c_list[i].thread, NULL);
-		i++;
-	}
+	monitor = malloc(sizeof(t_monitor));
+	if (!monitor)
+		return (NULL);
+	monitor->parsed = parsed;
+	monitor->dongles = d_list;
+	monitor->coders = c_list;
+	return (monitor);
 }
 
 int	thread_setup(t_coder *c_list, size_t id, \
@@ -50,8 +52,10 @@ long	current_time(void)
 
 long	compile(long c_time, t_thread *thread)
 {
+	pthread_mutex_lock(&thread->coder->mutex);
 	thread->coder->deadline = current_time() \
 + thread->parsed->time_to_burnout;
+	pthread_mutex_unlock(&thread->coder->mutex);
 	printf("%ld %d is compiling\n", c_time, thread->coder->id);
 	usleep(thread->parsed->time_to_compile * 1000);
 	return (current_time() - thread->parsed->clock_start);

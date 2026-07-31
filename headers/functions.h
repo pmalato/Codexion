@@ -1,73 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   codexion.h                                         :+:      :+:    :+:   */
+/*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/31 11:21:39 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/31 11:24:02 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CODEXION_H
-# define CODEXION_H
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <stdbool.h>
-# include <pthread.h>
-# include <sys/time.h>
-
-typedef struct s_arguments
-{
-	long			clock_start;
-	int				number_of_coders;
-	int				time_to_burnout;
-	int				time_to_compile;
-	int				time_to_debug;
-	int				time_to_refactor;
-	int				number_of_compiles_required;
-	int				dongle_cooldown;
-	char			*scheduler;
-	pthread_mutex_t	main_lock;
-}				t_arguments;
-
-typedef struct s_coder
-{
-	bool				alive;
-	bool				done;
-	int					id;
-	int					compiled_times;
-	int					last_compile;
-	long				deadline;
-	pthread_t			thread;
-	pthread_mutex_t		mutex;
-	t_arguments			*parsed;
-}				t_coder;
-
-typedef struct s_dongle
-{
-	bool			state;
-	long			cooldown;
-	int				*queue;
-	pthread_mutex_t	mutex;
-	pthread_cond_t	cond;
-}				t_dongle;
-
-typedef struct s_thread
-{
-	t_coder		*coder;
-	t_dongle	*d_list;
-	t_arguments	*parsed;
-}				t_thread;
-
-typedef struct s_monitor
-{
-	t_coder		*coders;
-	t_dongle	*dongles;
-	t_arguments	*parsed;
-}				t_monitor;
+#ifndef FUNCTIONS_H
+# define FUNCTIONS_H
+# include "structs.h"
 
 void		pack_values(t_arguments *parsed, char **av);
 void		*coder_routine(void *arg);

@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 17:13:34 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/30 20:18:25 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/31 12:12:20 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,15 @@ void	*edf(void)
 
 void	*monitor_routine(void *arg)
 {
-	t_coder	*c_list;
-	t_coder	*coder;
+	t_monitor	*monitor;
 
-	c_list = (t_coder *)arg;
+	monitor = (t_monitor *)arg;
 	while (1)
 	{
-		if (!check_burnout(c_list) || is_program_over(c_list))
+		if (!check_burnout(monitor->coders) || is_program_over(monitor->coders))
 		{
-			if (!check_burnout(c_list))
-			{
-				coder = check_burned(c_list);
-				printf("%d %d burned out", current_time() - \
-c_list->parsed->clock_start, coder);
-			}
-			thread_cleanup(c_list, c_list->parsed->number_of_coders);
-			free_coders(c_list, c_list->parsed->number_of_coders);
+			monitor_cleanup(monitor->coders, monitor->dongles, \
+monitor->parsed->number_of_coders);
 			return (NULL);
 		}
 		usleep(1000);
@@ -47,28 +40,31 @@ c_list->parsed->clock_start, coder);
 	return (NULL);
 }
 
-int	monitor_thread(t_arguments *parsed)
+int	monitor_thread(t_arguments *parsed, t_dongle *d_list, t_coder *c_list)
 {
-	pthread_t	monitor;
-	t_dongle	*d_list;
-	t_coder		*c_list;
+	pthread_t	monitor_thread;
+	t_monitor	*monitor;
 	size_t		i;
 
-	d_list = dongle_list(parsed);
-	c_list = coder_list(parsed, d_list);
+	monitor = new_monitor_struct(parsed, d_list, c_list);
+	if (!monitor)
+		return (0);
 	parsed->clock_start = current_time();
-	start_deadlines(parsed, c_list);
+	init_coder_mutex(c_list);
 	i = 0;
-	while (i < parsed->number_of_coders)
+	start_deadlines(c_list);
+	while (i < (size_t)parsed->number_of_coders)
 	{
 		if (!thread_setup(c_list, i, d_list, parsed))
 		{
-			thread_cleanup(c_list, i);
-			free(&c_list[i]);
+			monitor_cleanup(c_list, d_list, i);
+			free(parsed);
 			return (0);
 		}
 		i++;
 	}
+	if (pthread_create(&monitor_thread, NULL, monitor_routine, (void *)monitor))
+		return (1);
+	pthread_join(monitor_thread, NULL);
 	return (1);
-	pthread_create(&monitor, NULL, monitor_routine, (void *)c_list);
 }

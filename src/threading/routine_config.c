@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/26 11:58:36 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/29 16:41:50 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/07/31 12:26:03 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	dongle_acquire(pthread_cond_t *cond, pthread_mutex_t *mutex,
 void	dongle_unlock(pthread_cond_t *c1, pthread_cond_t *c2,\
 	pthread_mutex_t *m1, pthread_mutex_t *m2)
 {
-	pthread_cond_signal(c1);
+	pthread_cond_broadcast(c1);
 	pthread_mutex_unlock(m1);
-	pthread_cond_signal(c2);
+	pthread_cond_broadcast(c2);
 	pthread_mutex_unlock(m2);
 }
 
@@ -72,14 +72,16 @@ void	*coder_routine(void *arg)
 {
 	t_thread	*thread;
 	long		time1;
+	long		time2;
 
 	thread = (t_thread *)arg;
 	while (thread->coder->compiled_times \
 < thread->parsed->number_of_compiles_required)
 	{
 		time1 = dongle_handler(thread);
-		debug_and_refactor(time1, thread);
 		thread->coder->compiled_times++;
+		time2 = debug_and_refactor(time1, thread);
 	}
+	printf("%ld %d is finished\n", time2, thread->coder->id);
 	return (NULL);
 }
