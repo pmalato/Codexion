@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:19:57 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/31 12:07:34 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/02 12:37:38 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ int	main(int ac, char **av)
 	}
 	if (!monitor_thread(stuff, d_list, c_list))
 		return (0);
-	free(stuff);
 	return (0);
 }

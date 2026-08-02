@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 09:47:21 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/02 12:10:43 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/02 12:36:07 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	dongle_mutex_cleanup(t_dongle *d_list, size_t size)
 	{
 		free(d_list[i].queue);
 		pthread_mutex_destroy(&d_list[i].mutex);
+		pthread_cond_destroy(&d_list[i].cond);
 		i++;
 	}
 }

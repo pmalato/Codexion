@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 23:01:17 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/02 11:03:51 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/02 12:51:10 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_arguments	*args_parser(int ac, char **av)
 	parsed = malloc(sizeof(t_arguments));
 	if (!parsed)
 		return (NULL);
+	parsed->stop = false;
 	pack_values(parsed, av);
 	return (parsed);
 }
