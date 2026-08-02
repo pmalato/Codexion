@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 23:01:17 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/23 21:27:11 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/02 11:03:51 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,11 @@ t_arguments	*args_parser(int ac, char **av)
 		return (NULL);
 	pack_values(parsed, av);
 	return (parsed);
+}
+
+void	request_stop(t_arguments *parsed)
+{
+	pthread_mutex_lock(&parsed->main_lock);
+	parsed->stop = true;
+	pthread_mutex_unlock(&parsed->main_lock);
 }

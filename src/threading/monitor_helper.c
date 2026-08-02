@@ -6,19 +6,21 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 18:24:29 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/02 00:31:22 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/02 11:19:04 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../codexion.h"
 
-void	monitor_cleanup(t_coder *c_list, t_dongle *d_list, size_t i)
+void	monitor_cleanup(t_arguments *parsed, t_coder *c_list, t_dongle *d_list, size_t i)
 {
 	thread_cleanup(c_list, i);
 	coder_mutex_cleanup(c_list, i);
 	dongle_mutex_cleanup(d_list, i);
 	free(c_list);
 	free(d_list);
+	pthread_mutex_destroy(&parsed->main_lock);
+	free(parsed);
 }
 
 int	is_program_over(t_coder *c_list)
@@ -75,6 +77,8 @@ int	check_burnout(t_dongle *d_list, t_coder *c_list)
 		pthread_mutex_lock(&c_list[i].mutex);
 		if (c_list[i].deadline <= current_time())
 		{
+			request_stop(c_list->parsed);
+			dongle_broadcast(d_list, c_list);
 			c_list[i].alive = false;
 			printf("%ld %d burned out\n", current_time() - \
 c_list->parsed->clock_start, c_list[i].id);

@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/02 00:52:27 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/02 11:50:50 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 typedef struct s_arguments
 {
+	bool			stop;
 	long			clock_start;
 	int				number_of_coders;
 	int				time_to_burnout;
@@ -55,7 +56,6 @@ typedef struct s_coder
 typedef struct s_dongle
 {
 	bool			state;
-	int				id;
 	long			cooldown;
 	t_queue			*queue;
 	pthread_mutex_t	mutex;
@@ -83,17 +83,21 @@ void		thread_cleanup(t_coder *c_list, size_t size);
 void		dongle_mutex_cleanup(t_dongle *d_list, size_t size);
 void		coder_mutex_cleanup(t_coder *c_list, size_t size);
 void		cond_swap(int *a, int *b);
-void		dongle_acquire(pthread_cond_t *cond, pthread_mutex_t *mutex,\
-	t_dongle *d, t_thread *thread);
 void		start_deadlines(t_coder *c_list);
 void		init_coder_mutex(t_coder *c_list);
 void		free_coders(t_coder *c_list, int size);
-void		monitor_cleanup(t_coder *c_list, t_dongle *d_list, size_t i);
+void		monitor_cleanup(t_arguments *parsed, t_coder *c_list,\
+	t_dongle *d_list, size_t i);
 void		dongle_release(t_thread *thread, size_t id);
 void		dongle_broadcast(t_dongle *d_list, t_coder *c_list);
+void		end_monitor(t_monitor *monitor, pthread_t monitor_thread);
+void		request_stop(t_arguments *parsed);
+void		edf(t_thread *thread, t_dongle *dongle);
+bool		check_stop(t_arguments *parsed);
+int			dongle_acquire(pthread_cond_t *cond, pthread_mutex_t *mutex,\
+	t_dongle *d, t_thread *thread);
 int			monitor_thread(t_arguments *parsed, t_dongle *d_list,\
 	t_coder *c_list);
-void		edf(t_thread *thread, t_dongle *dongle);
 int			is_nmb_of_args_valid(int ac);
 int			ft_strcmp(char *s1, char *s2);
 int			codex_atoi(char *str);
