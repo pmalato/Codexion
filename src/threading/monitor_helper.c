@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 18:24:29 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/31 10:50:52 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/02 00:31:22 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	monitor_cleanup(t_coder *c_list, t_dongle *d_list, size_t i)
 {
-	coder_mutex_cleanup(c_list, i);
 	thread_cleanup(c_list, i);
-	free(c_list);
+	coder_mutex_cleanup(c_list, i);
 	dongle_mutex_cleanup(d_list, i);
+	free(c_list);
 	free(d_list);
 }
 
@@ -65,7 +65,7 @@ c_list->parsed->time_to_burnout;
 	}
 }
 
-int	check_burnout(t_coder *c_list)
+int	check_burnout(t_dongle *d_list, t_coder *c_list)
 {
 	int	i;
 
@@ -81,6 +81,7 @@ c_list->parsed->clock_start, c_list[i].id);
 			pthread_mutex_unlock(&c_list[i].mutex);
 			return (0);
 		}
+		dongle_broadcast(d_list, c_list);
 		pthread_mutex_unlock(&c_list[i].mutex);
 		i++;
 	}

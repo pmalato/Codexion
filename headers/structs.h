@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 11:15:55 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/31 11:24:14 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/01 17:19:30 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ typedef struct s_arguments
 	pthread_mutex_t	main_lock;
 }				t_arguments;
 
+typedef struct s_queue
+{
+	int	queue[2];
+	int	size;
+}				t_queue;
+
 typedef struct s_coder
 {
 	bool				alive;
@@ -50,7 +56,7 @@ typedef struct s_dongle
 {
 	bool			state;
 	long			cooldown;
-	int				*queue;
+	t_queue			*queue;
 	pthread_mutex_t	mutex;
 	pthread_cond_t	cond;
 }				t_dongle;

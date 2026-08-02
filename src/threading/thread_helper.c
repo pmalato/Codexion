@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 09:47:21 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/31 09:52:07 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/02 00:43:23 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	dongle_mutex_cleanup(t_dongle *d_list, size_t size)
 	i = 0;
 	while (i < size)
 	{
+		free(d_list[i].queue);
 		pthread_mutex_destroy(&d_list[i].mutex);
 		i++;
 	}
@@ -46,4 +47,26 @@ void	coder_mutex_cleanup(t_coder *c_list, size_t size)
 		pthread_mutex_destroy(&c_list[i].mutex);
 		i++;
 	}
+}
+
+void	dongle_broadcast(t_dongle *d_list, t_coder *c_list)
+{
+	int	i;
+
+	i = 0;
+	while (1 < c_list->parsed->number_of_coders)
+	{
+		pthread_mutex_lock(&c_list[i].mutex);
+		pthread_cond_broadcast(&d_list[i].cond);
+		pthread_mutex_unlock(&c_list[i].mutex);
+	}
+}
+
+long	get_coder_deadline(t_coder *coder)
+{
+	long	deadline;
+	pthread_mutex_lock(&coder->mutex);
+	deadline = coder->deadline;
+	pthread_mutex_lock(&coder->mutex);
+	return (deadline);
 }

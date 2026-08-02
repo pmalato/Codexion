@@ -6,14 +6,14 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 10:16:13 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/31 12:19:47 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/01 19:52:53 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../codexion.h"
 
 t_monitor	*new_monitor_struct(t_arguments *parsed, \
-	t_dongle *d_list, t_coder *c_list)
+t_dongle *d_list, t_coder *c_list)
 {
 	t_monitor	*monitor;
 
@@ -27,11 +27,13 @@ t_monitor	*new_monitor_struct(t_arguments *parsed, \
 }
 
 int	thread_setup(t_coder *c_list, size_t id, \
-t_dongle *d_list, t_arguments *parsed)
+t_dongle *d_list)
 {
 	t_thread	*thread;
+	t_coder		*coder;
 
-	thread = new_thread_struct(c_list, d_list, parsed);
+	coder = &c_list[id];
+	thread = new_thread_struct(c_list, coder, d_list, coder->parsed);
 	if (!thread)
 		return (0);
 	if (pthread_create(&c_list[id].thread, NULL, coder_routine, (void *)thread))

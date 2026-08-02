@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/23 17:02:05 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/31 12:34:00 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/02 00:53:16 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,20 @@
 t_dongle	new_dongle(void)
 {
 	t_dongle	dongle;
+	t_queue		*queue;
 
 	dongle.state = false;
 	dongle.cooldown = 0;
+	queue = malloc(sizeof(t_queue));
+	if (!queue)
+		queue = NULL;
+	else
+	{
+		queue->queue[0] = -1;
+		queue->queue[1] = -1;
+		queue->size = 0;
+	}
+	dongle.queue = queue;
 	return (dongle);
 }
 
@@ -35,6 +46,7 @@ t_dongle	*dongle_list(t_arguments *parsed)
 	while (i < len)
 	{
 		d_list[i] = new_dongle();
+		d_list[i].id = i;
 		pthread_mutex_init(&d_list[i].mutex, NULL);
 		pthread_cond_init(&d_list[i].cond, NULL);
 		i++;
@@ -53,14 +65,15 @@ t_coder	new_coder(void)
 	return (coder);
 }
 
-t_thread	*new_thread_struct(\
-	t_coder *coder, t_dongle *dongle, t_arguments *parsed)
+t_thread	*new_thread_struct(t_coder *c_list, t_coder *coder, \
+t_dongle *dongle, t_arguments *parsed)
 {
 	t_thread	*thread;
 
 	thread = malloc(sizeof(t_thread));
 	if (!thread)
 		return (NULL);
+	thread->c_list = c_list;
 	thread->coder = coder;
 	thread->d_list = dongle;
 	thread->parsed = parsed;

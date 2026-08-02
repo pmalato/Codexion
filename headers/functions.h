@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/07/31 11:24:02 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/01 19:53:50 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		start_deadlines(t_coder *c_list);
 void		init_coder_mutex(t_coder *c_list);
 void		free_coders(t_coder *c_list, int size);
 void		monitor_cleanup(t_coder *c_list, t_dongle *d_list, size_t i);
-int			monitor_thread(t_arguments *parsed, t_dongle *d_list, \
+int			monitor_thread(t_arguments *parsed, t_dongle *d_list,\
 	t_coder *c_list);
 int			is_nmb_of_args_valid(int ac);
 int			ft_strcmp(char *s1, char *s2);
@@ -50,7 +50,7 @@ t_coder		new_coder(void);
 t_coder		*coder_list(t_arguments *parsed);
 t_thread	*new_thread_struct(\
 	t_coder *coder, t_dongle *dongle, t_arguments *parsed);
-t_monitor	*new_monitor_struct(t_arguments *parsed, \
+t_monitor	*new_monitor_struct(t_arguments *parsed,\
 	t_dongle *d_list, t_coder *c_list);
 
 #endif
