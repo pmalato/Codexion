@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 09:47:21 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/02 12:36:07 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/11 12:54:49 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	dongle_broadcast(t_dongle *d_list, t_coder *c_list)
 long	get_coder_deadline(t_coder *coder)
 {
 	long	deadline;
+
 	pthread_mutex_lock(&coder->mutex);
 	deadline = coder->deadline;
 	pthread_mutex_unlock(&coder->mutex);

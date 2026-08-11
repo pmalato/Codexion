@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/02 11:50:50 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/11 12:48:42 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void		end_monitor(t_monitor *monitor, pthread_t monitor_thread);
 void		request_stop(t_arguments *parsed);
 void		edf(t_thread *thread, t_dongle *dongle);
 bool		check_stop(t_arguments *parsed);
+bool		get_coder_alive(t_coder *coder);
 int			dongle_acquire(pthread_cond_t *cond, pthread_mutex_t *mutex,\
 	t_dongle *d, t_thread *thread);
 int			monitor_thread(t_arguments *parsed, t_dongle *d_list,\

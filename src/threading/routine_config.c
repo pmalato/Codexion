@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/26 11:58:36 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/02 12:15:10 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/11 12:53:51 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	dongle_release(t_thread *thread, size_t id)
 	thread->d_list[id].queue->queue[1] = -1;
 	thread->d_list[id].queue->size--;
 	thread->d_list[id].state = false;
-	thread->d_list[id].cooldown = current_time() + thread->parsed->dongle_cooldown;
+	thread->d_list[id].cooldown = current_time() + \
+thread->parsed->dongle_cooldown;
 	pthread_cond_broadcast(&thread->d_list[id].cond);
 	pthread_mutex_unlock(&thread->d_list[id].mutex);
 }
@@ -80,12 +81,12 @@ long	dongle_handler(t_thread *thread)
 	if (!dongle_acquire(&thread->d_list[c_id].cond, &thread->d_list[c_id].mutex, \
 &thread->d_list[c_id], thread))
 		return (-1);
-	if (n > 1 && !dongle_acquire(&thread->d_list[next_id].cond,
-		&thread->d_list[next_id].mutex, &thread->d_list[next_id], thread))
-		{
-			dongle_release(thread, c_id);
-			return(-1);
-		}
+	if (n > 1 && !dongle_acquire(&thread->d_list[next_id].cond, \
+&thread->d_list[next_id].mutex, &thread->d_list[next_id], thread))
+	{
+		dongle_release(thread, c_id);
+		return (-1);
+	}
 	time_dongle = current_time() - thread->parsed->clock_start;
 	compile(time_dongle, thread);
 	dongle_release(thread, c_id);
@@ -102,7 +103,7 @@ void	*coder_routine(void *arg)
 	thread = (t_thread *)arg;
 	while (thread->coder->compiled_times \
 < thread->parsed->number_of_compiles_required && \
-thread->coder->alive && !check_stop(thread->parsed))
+get_coder_alive(thread->coder) && !check_stop(thread->parsed))
 	{
 		time1 = dongle_handler(thread);
 		if (time1 == -1)

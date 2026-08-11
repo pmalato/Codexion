@@ -6,7 +6,7 @@
 /*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 23:01:17 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/02 12:51:10 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/08/11 12:48:13 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,14 @@ void	request_stop(t_arguments *parsed)
 	pthread_mutex_lock(&parsed->main_lock);
 	parsed->stop = true;
 	pthread_mutex_unlock(&parsed->main_lock);
+}
+
+bool	get_coder_alive(t_coder *coder)
+{
+	bool	alive;
+
+	pthread_mutex_lock(&coder->mutex);
+	alive = coder->alive;
+	pthread_mutex_unlock(&coder->mutex);
+	return (alive);
 }
