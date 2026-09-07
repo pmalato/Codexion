@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor_config.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 17:13:34 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/02 11:11:59 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/09/07 15:08:18 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ is_program_over(monitor->coders))
 monitor->dongles, monitor->parsed->number_of_coders);
 			return (NULL);
 		}
-		usleep(1000);
+		usleep(500);
 	}
 	return (NULL);
 }

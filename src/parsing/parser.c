@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 23:01:17 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/11 12:48:13 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/09/07 18:50:54 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,11 @@ bool	get_coder_alive(t_coder *coder)
 	alive = coder->alive;
 	pthread_mutex_unlock(&coder->mutex);
 	return (alive);
+}
+
+void	safe_print(pthread_mutex_t *lock, char *str, long time, int id)
+{
+	pthread_mutex_lock(lock);
+	printf(str, time, id);
+	pthread_mutex_unlock(lock);
 }

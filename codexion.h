@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/11 12:48:42 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/09/07 19:02:15 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_arguments
 	int				dongle_cooldown;
 	char			*scheduler;
 	pthread_mutex_t	main_lock;
+	pthread_mutex_t	print;
 }				t_arguments;
 
 typedef struct s_queue
@@ -77,6 +78,7 @@ typedef struct s_monitor
 	t_arguments	*parsed;
 }				t_monitor;
 
+void		safe_print(pthread_mutex_t *lock, char *str, long time, int id);
 void		pack_values(t_arguments *parsed, char **av);
 void		*coder_routine(void *arg);
 void		thread_cleanup(t_coder *c_list, size_t size);
@@ -95,8 +97,7 @@ void		request_stop(t_arguments *parsed);
 void		edf(t_thread *thread, t_dongle *dongle);
 bool		check_stop(t_arguments *parsed);
 bool		get_coder_alive(t_coder *coder);
-int			dongle_acquire(pthread_cond_t *cond, pthread_mutex_t *mutex,\
-	t_dongle *d, t_thread *thread);
+int			dongle_acquire(t_dongle *d, t_thread *thread);
 int			monitor_thread(t_arguments *parsed, t_dongle *d_list,\
 	t_coder *c_list);
 int			is_nmb_of_args_valid(int ac);
@@ -108,8 +109,8 @@ int			thread_setup(t_coder *coder, size_t id, t_dongle *d_list);
 int			check_burnout(t_dongle *d_list, t_coder *c_list);
 int			is_program_over(t_coder *c_list);
 long		current_time(void);
-long		compile(long c_time, t_thread *thread);
-long		debug_and_refactor(long c_time, t_thread *thread);
+void		compile(long c_time, t_thread *thread);
+void		debug_and_refactor(long c_time, t_thread *thread);
 long		dongle_handler(t_thread *thread);
 long		get_coder_deadline(t_coder *coder);
 t_arguments	*args_parser(int ac, char **av);

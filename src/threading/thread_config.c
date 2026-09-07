@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread_config.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 10:16:13 by pmalato           #+#    #+#             */
-/*   Updated: 2026/08/01 19:52:53 by pmalato          ###   ########.fr       */
+/*   Updated: 2026/09/07 19:11:11 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,29 @@ long	current_time(void)
 	return ((c_time.tv_sec * 1000 + c_time.tv_usec / 1000));
 }
 
-long	compile(long c_time, t_thread *thread)
+void	compile(long c_time, t_thread *thread)
 {
+	if (check_stop(thread->parsed))
+		return ;
 	pthread_mutex_lock(&thread->coder->mutex);
 	thread->coder->deadline = current_time() \
 + thread->parsed->time_to_burnout;
 	pthread_mutex_unlock(&thread->coder->mutex);
-	printf("%ld %d is compiling\n", c_time, thread->coder->id);
+	safe_print(&thread->parsed->print, "%ld %d is compiling\n", c_time, thread->coder->id);
 	usleep(thread->parsed->time_to_compile * 1000);
-	return (current_time() - thread->parsed->clock_start);
 }
 
-long	debug_and_refactor(long c_time, t_thread *thread)
+void	debug_and_refactor(long c_time, t_thread *thread)
 {
 	long			d_end;
 
-	printf("%ld %d is debugging\n", c_time, thread->coder->id);
+	if (check_stop(thread->parsed))
+		return ;
+	safe_print(&thread->parsed->print, "%ld %d is debugging\n", c_time, thread->coder->id);
 	usleep(thread->parsed->time_to_debug * 1000);
 	d_end = current_time() - thread->parsed->clock_start;
-	printf("%ld %d is refactoring\n", d_end, thread->coder->id);
+	if (check_stop(thread->parsed))
+		return ;
+	safe_print(&thread->parsed->print, "%ld %d is refactoring\n", d_end, thread->coder->id);
 	usleep(thread->parsed->time_to_refactor * 1000);
-	return (current_time() - thread->parsed->clock_start);
 }
