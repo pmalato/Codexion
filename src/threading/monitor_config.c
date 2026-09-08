@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 17:13:34 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/07 15:08:18 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/08 17:07:50 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	edf(t_thread *thread, t_dongle *dongle)
 {
 	int		temp;
 
+	if (dongle->state)
+		return ;
 	if (dongle->queue->queue[0] != -1 && dongle->queue->queue[1] != -1)
 	{
 		if (get_coder_deadline(&thread->c_list[dongle->queue->queue[0]]) > \

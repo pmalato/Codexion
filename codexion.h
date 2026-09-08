@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/07 19:02:15 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/08 17:50:08 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_coder
 typedef struct s_dongle
 {
 	bool			state;
+    int             id;
 	long			cooldown;
 	t_queue			*queue;
 	pthread_mutex_t	mutex;

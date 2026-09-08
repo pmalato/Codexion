@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 13:44:00 by pecoelho          #+#    #+#             */
-/*   Updated: 2026/09/07 18:51:59 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/08 18:20:51 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,18 @@ int	dongle_acquire(t_dongle *d, t_thread *thread)
 d->queue->queue[1] != thread->coder->id)
 	{
 		if (d->queue->queue[0] == -1)
+		{
 			d->queue->queue[0] = thread->coder->id;
+			d->queue->size++;
+		}
 		else if (d->queue->queue[1] == -1)
+		{
 			d->queue->queue[1] = thread->coder->id;
-		d->queue->size++;
+			d->queue->size++;
+		}
 	}
-	if (ft_strcmp(thread->parsed->scheduler, "edf"))
+	if (ft_strcmp(thread->parsed->scheduler, "edf") && \
+!d->state && d->cooldown <= current_time())
 		edf(thread, d);
 	while (!check_stop(thread->parsed) && \
 (d->state || current_time() < d->cooldown || \
