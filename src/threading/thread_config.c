@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 10:16:13 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/08 16:53:14 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 12:22:45 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	debug_and_refactor(long c_time, t_thread *thread)
 
 	if (check_stop(thread->parsed))
 		return ;
-	safe_print(&thread->parsed->print,\
+	safe_print(&thread->parsed->print, \
 "%ld %d is debugging\n", c_time, thread->coder->id);
 	usleep(thread->parsed->time_to_debug * 1000);
 	d_end = current_time() - thread->parsed->clock_start;

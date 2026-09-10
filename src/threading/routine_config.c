@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 13:44:00 by pecoelho          #+#    #+#             */
-/*   Updated: 2026/09/08 18:20:51 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 12:23:17 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ d->queue->queue[0] != thread->coder->id))
 	}
 	d->state = true;
 	pthread_mutex_unlock(&d->mutex);
-	safe_print(&thread->parsed->print, "%ld %d has taken a dongle\n",\
+	safe_print(&thread->parsed->print, "%ld %d has taken a dongle\n", \
 current_time() - thread->parsed->clock_start, thread->coder->id);
 	return (1);
 }
