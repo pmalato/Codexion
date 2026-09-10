@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 13:44:00 by pecoelho          #+#    #+#             */
-/*   Updated: 2026/09/10 19:08:38 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 19:58:49 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ long	dongle_handler(t_thread *thread)
 	time_dongle = current_time() - thread->parsed->clock_start;
 	compile(time_dongle, thread);
 	dongle_release(thread, c_id);
-	if (n > 1)
-		dongle_release(thread, next_id);
+	dongle_release(thread, next_id);
 	return (current_time() - thread->parsed->clock_start);
 }
 

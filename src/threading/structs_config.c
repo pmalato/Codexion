@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/23 17:02:05 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/10 12:22:01 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 19:27:21 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_dongle	*dongle_list(t_arguments *parsed)
 	while (i < len)
 	{
 		d_list[i] = new_dongle();
-		d_list[i].id = 1;
+		d_list[i].id = i;
 		pthread_mutex_init(&d_list[i].mutex, NULL);
 		pthread_cond_init(&d_list[i].cond, NULL);
 		i++;
