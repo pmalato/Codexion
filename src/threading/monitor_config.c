@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 17:13:34 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/08 17:07:50 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 18:24:02 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ is_program_over(monitor->coders))
 monitor->dongles, monitor->parsed->number_of_coders);
 			return (NULL);
 		}
-		usleep(500);
+		usleep(1000);
 	}
 	return (NULL);
 }

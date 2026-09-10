@@ -6,31 +6,21 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 14:17:27 by pecoelho          #+#    #+#             */
-/*   Updated: 2026/09/10 16:00:43 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 19:07:30 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../codexion.h"
 
-int	acquire_single(t_thread *thread, t_dongle *d)
+void	solo_edge_case(t_thread *thread, t_dongle *d)
 {
-	int	id;
-
-	id = thread->coder->id;
-	register_wait(d, id);
-	pthread_mutex_lock(&d->mutex);
-	while (!check_stop(thread->parsed) && \
-(d->state || current_time() <= d->cooldown || d->queue->queue[0] != id))
-		pthread_cond_wait(&d->cond, &d->mutex);
-	if (check_stop(thread->parsed))
+	register_wait(d, thread->coder->id);
+	while (!check_stop(thread->parsed))
 	{
+		pthread_mutex_lock(&d->mutex);
+		pthread_cond_wait(&d->cond, &d->mutex);
 		pthread_mutex_unlock(&d->mutex);
-		return (0);
 	}
-	d->state = true;
-	pthread_mutex_unlock(&d->mutex);
-	announce_taken(thread);
-	return (1);
 }
 
 int	acquire_pair(t_thread *thread, t_dongle *d1, t_dongle *d2)
@@ -63,7 +53,5 @@ int	acquire_pair(t_thread *thread, t_dongle *d1, t_dongle *d2)
 
 int	acquire_dongle_pair(t_thread *thread, t_dongle *d1, t_dongle *d2)
 {
-	if (d1 == d2)
-		return (acquire_single(thread, d1));
 	return (acquire_pair(thread, d1, d2));
 }

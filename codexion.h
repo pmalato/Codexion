@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/10 15:14:53 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 19:07:50 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ void		dongle_broadcast(t_dongle *d_list, t_coder *c_list);
 void		end_monitor(t_monitor *monitor, pthread_t monitor_thread);
 void		request_stop(t_arguments *parsed);
 void		edf(t_thread *thread, t_dongle *dongle);
+void		solo_edge_case(t_thread *thread, t_dongle *d);
 bool		check_stop(t_arguments *parsed);
 bool		get_coder_alive(t_coder *coder);
 int			acquire_pair(t_thread *thread, t_dongle *d1, t_dongle *d2);
 int			acquire_dongle_pair(t_thread *thread, t_dongle *d1, t_dongle *d2);
-int			acquire_single(t_thread *thread, t_dongle *d);
 int			are_dongles_ready(t_dongle *d1, t_dongle *d2, int id);
 int			monitor_thread(t_arguments *parsed, t_dongle *d_list,\
 	t_coder *c_list);

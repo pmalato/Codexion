@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 13:44:55 by pecoelho          #+#    #+#             */
-/*   Updated: 2026/09/10 15:32:30 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 18:45:30 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	register_wait(t_dongle *d, int id)
 
 int	are_dongles_ready(t_dongle *d1, t_dongle *d2, int id)
 {
+	if (d1 == d2)
+		return (0);
 	if (d1->queue->queue[0] != id || d2->queue->queue[0] != id)
 		return (0);
 	if (d1->state || d2->state)

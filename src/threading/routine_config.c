@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 13:44:00 by pecoelho          #+#    #+#             */
-/*   Updated: 2026/09/10 15:15:20 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 19:08:38 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ long	dongle_handler(t_thread *thread)
 	c_id = thread->coder->id;
 	next_id = (c_id + 1) % thread->parsed->number_of_coders;
 	cond_swap(&c_id, &next_id);
+	if (c_id == next_id)
+		solo_edge_case(thread, &thread->d_list[c_id]);
 	if (!acquire_dongle_pair(thread, &thread->d_list[c_id], \
 &thread->d_list[next_id]))
 		return (-1);
