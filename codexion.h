@@ -6,7 +6,7 @@
 /*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/10 12:21:25 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/10 15:14:53 by pecoelho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,12 @@ typedef struct s_monitor
 	t_arguments	*parsed;
 }				t_monitor;
 
+void		announce_taken(t_thread *thread);
 void		safe_print(pthread_mutex_t *lock, char *str, long time, int id);
 void		pack_values(t_arguments *parsed, char **av);
 void		*coder_routine(void *arg);
+void		execute_edf(t_thread *thread, t_dongle *d);
+void		register_wait(t_dongle *d, int id);
 void		thread_cleanup(t_coder *c_list, size_t size);
 void		dongle_mutex_cleanup(t_dongle *d_list, size_t size);
 void		coder_mutex_cleanup(t_coder *c_list, size_t size);
@@ -98,7 +101,10 @@ void		request_stop(t_arguments *parsed);
 void		edf(t_thread *thread, t_dongle *dongle);
 bool		check_stop(t_arguments *parsed);
 bool		get_coder_alive(t_coder *coder);
-int			dongle_acquire(t_dongle *d, t_thread *thread);
+int			acquire_pair(t_thread *thread, t_dongle *d1, t_dongle *d2);
+int			acquire_dongle_pair(t_thread *thread, t_dongle *d1, t_dongle *d2);
+int			acquire_single(t_thread *thread, t_dongle *d);
+int			are_dongles_ready(t_dongle *d1, t_dongle *d2, int id);
 int			monitor_thread(t_arguments *parsed, t_dongle *d_list,\
 	t_coder *c_list);
 int			is_nmb_of_args_valid(int ac);

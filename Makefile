@@ -10,7 +10,9 @@ SRC = codexion.c \
 	src/threading/thread_config.c \
 	src/threading/monitor_helper.c \
 	src/threading/monitor_config.c \
-	src/threading/routine_config.c
+	src/threading/routine_config.c \
+	src/threading/routine_helper.c \
+	src/threading/dongle_acquire.c
 	
 OBJ = $(SRC:.c=.o)
 
