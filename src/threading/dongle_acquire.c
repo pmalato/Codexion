@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dongle_acquire.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 14:17:27 by pecoelho          #+#    #+#             */
-/*   Updated: 2026/09/10 19:07:30 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/11 10:02:04 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ void	solo_edge_case(t_thread *thread, t_dongle *d)
 		pthread_cond_wait(&d->cond, &d->mutex);
 		pthread_mutex_unlock(&d->mutex);
 	}
+}
+
+void	wake_up_call(t_dongle *d)
+{
+	pthread_mutex_lock(&d->mutex);
+	pthread_cond_wait(&d->cond, &d->mutex);
+	pthread_mutex_unlock(&d->mutex);
 }
 
 int	acquire_pair(t_thread *thread, t_dongle *d1, t_dongle *d2)
@@ -44,9 +51,7 @@ int	acquire_pair(t_thread *thread, t_dongle *d1, t_dongle *d2)
 		}
 		pthread_mutex_unlock(&d2->mutex);
 		pthread_mutex_unlock(&d1->mutex);
-		pthread_mutex_lock(&d1->mutex);
-		pthread_cond_wait(&d1->cond, &d1->mutex);
-		pthread_mutex_unlock(&d1->mutex);
+		wake_up_call(d1);
 	}
 	return (0);
 }

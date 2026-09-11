@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_config.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 13:44:00 by pecoelho          #+#    #+#             */
-/*   Updated: 2026/09/10 19:58:49 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/11 11:28:54 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ long	dongle_handler(t_thread *thread)
 	long	time_dongle;
 	int		c_id;
 	int		next_id;
-	int		n;
 
-	n = thread->parsed->number_of_coders;
 	c_id = thread->coder->id;
 	next_id = (c_id + 1) % thread->parsed->number_of_coders;
+	if (c_id % 2 == 0)
+		usleep(100);
 	cond_swap(&c_id, &next_id);
 	if (c_id == next_id)
 		solo_edge_case(thread, &thread->d_list[c_id]);

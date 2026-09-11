@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread_config.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 10:16:13 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/10 12:22:45 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/11 08:55:37 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	compile(long c_time, t_thread *thread)
 + thread->parsed->time_to_burnout;
 	pthread_mutex_unlock(&thread->coder->mutex);
 	safe_print(&thread->parsed->print, \
-"%ld %d is compiling\n", c_time, thread->coder->id);
+"%ld %d is compiling\n", c_time, thread->coder->id + 1);
 	usleep(thread->parsed->time_to_compile * 1000);
 }
 
@@ -72,12 +72,12 @@ void	debug_and_refactor(long c_time, t_thread *thread)
 	if (check_stop(thread->parsed))
 		return ;
 	safe_print(&thread->parsed->print, \
-"%ld %d is debugging\n", c_time, thread->coder->id);
+"%ld %d is debugging\n", c_time, thread->coder->id + 1);
 	usleep(thread->parsed->time_to_debug * 1000);
 	d_end = current_time() - thread->parsed->clock_start;
 	if (check_stop(thread->parsed))
 		return ;
 	safe_print(&thread->parsed->print, \
-"%ld %d is refactoring\n", d_end, thread->coder->id);
+"%ld %d is refactoring\n", d_end, thread->coder->id + 1);
 	usleep(thread->parsed->time_to_refactor * 1000);
 }

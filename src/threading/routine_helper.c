@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 13:44:55 by pecoelho          #+#    #+#             */
-/*   Updated: 2026/09/10 18:45:30 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/11 08:56:06 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	are_dongles_ready(t_dongle *d1, t_dongle *d2, int id)
 void	announce_taken(t_thread *thread)
 {
 	safe_print(&thread->parsed->print, "%ld %d has taken a dongle\n", \
-current_time() - thread->parsed->clock_start, thread->coder->id);
+current_time() - thread->parsed->clock_start, thread->coder->id + 1);
 	safe_print(&thread->parsed->print, "%ld %d has taken a dongle\n", \
-current_time() - thread->parsed->clock_start, thread->coder->id);
+current_time() - thread->parsed->clock_start, thread->coder->id + 1);
 }

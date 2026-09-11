@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 10:53:51 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/10 19:07:50 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/11 11:21:28 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void		end_monitor(t_monitor *monitor, pthread_t monitor_thread);
 void		request_stop(t_arguments *parsed);
 void		edf(t_thread *thread, t_dongle *dongle);
 void		solo_edge_case(t_thread *thread, t_dongle *d);
+void		wake_up_call(t_dongle *d);
 bool		check_stop(t_arguments *parsed);
 bool		get_coder_alive(t_coder *coder);
 int			acquire_pair(t_thread *thread, t_dongle *d1, t_dongle *d2);

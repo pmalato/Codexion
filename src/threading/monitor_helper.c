@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecoelho <pecoelho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmalato <pmalato@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 18:24:29 by pmalato           #+#    #+#             */
-/*   Updated: 2026/09/10 18:50:16 by pecoelho         ###   ########.fr       */
+/*   Updated: 2026/09/11 10:12:34 by pmalato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	check_burnout(t_dongle *d_list, t_coder *c_list)
 			request_stop(c_list->parsed);
 			dongle_broadcast(d_list, c_list);
 			safe_print(&c_list->parsed->print, "%ld %d burned out\n", \
-current_time() - c_list->parsed->clock_start, c_list[i].id);
+current_time() - c_list->parsed->clock_start, c_list[i].id + 1);
 			return (0);
 		}
 		dongle_broadcast(d_list, c_list);
